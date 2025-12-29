@@ -220,4 +220,13 @@
   <string name="excel_creating_workbook">Creating Excel workbook...</string>
   <string name="excel_saving_file">Saving file...</string>
   <string name="excel_file_saved">File saved to: %s</string>
+  <string name="chat_back">返回</string>
+  <string name="chat_friendName">好友名稱</string>
+  <string name="chat_inputing">輸入中...</string>
+  <string name="chat_send">發送</string>
+  <string name="item_friend_name">好友名字</string>
+  <string name="friend_example_com">friend@example.com</string>
+  <string name="item_friend_delete">删除好友</string>
+  <string name="item_message_content">訊息内容</string>
+  <string name="item_meesage_sample_time">12:00</string>
 </resources>

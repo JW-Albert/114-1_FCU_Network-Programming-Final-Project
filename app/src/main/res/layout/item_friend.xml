@@ -1,35 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:layout_margin="8dp"
-  app:cardCornerRadius="12dp"
-  android:elevation="4dp"
-  app:cardBackgroundColor="#F8C5C5">
+  android:orientation="horizontal"
+  android:padding="16dp"
+  android:background="?attr/selectableItemBackground"
+  android:gravity="center_vertical">
 
+  <!-- 好友訊息區域 -->
   <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
     android:orientation="vertical">
+
     <TextView
-      android:id="@+id/tv_add_friend_ID"
+      android:id="@+id/tv_friend_name"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="@string/friend_id"
-      android:textSize="24sp" />
+      android:text="@string/item_friend_name"
+      android:textSize="18sp"
+      android:textStyle="bold"
+      android:textColor="@android:color/black" />
+
     <TextView
-      android:id="@+id/tv_add_friend_mail"
+      android:id="@+id/tv_friend_email"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="@string/friend_email"
-      android:textSize="24sp" />
-    <TextView
-      android:id="@+id/tv_add_friend_account"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="@string/friend_account"
-      android:textSize="24sp" />
+      android:layout_marginTop="4dp"
+      android:text="@string/friend_example_com"
+      android:textSize="14sp"
+      android:textColor="#757575" />
   </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+  <!-- 删除按钮 -->
+  <ImageButton
+    android:id="@+id/btn_delete_friend"
+    android:layout_width="48dp"
+    android:layout_height="48dp"
+    android:background="?attr/selectableItemBackgroundBorderless"
+    android:src="@android:drawable/ic_menu_delete"
+    android:contentDescription="@string/item_friend_delete"
+    app:tint="#F44336" />
+
+</LinearLayout>

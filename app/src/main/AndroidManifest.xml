@@ -14,9 +14,7 @@
     android:supportsRtl="true"
     android:theme="@style/Theme.APPClassFinalProject"
     tools:targetApi="31">
-    <activity
-      android:exported="false"
-      android:name=".userfriend" />
+
     <activity
       android:exported="false"
       android:name=".GanttActivity" />
@@ -43,6 +41,17 @@
 
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
+    </activity>
+
+    <!-- ChatActivity - 聊天界面 -->
+    <activity
+      android:name=".ChatActivity"
+      android:exported="false"
+      android:windowSoftInputMode="adjustResize"
+      android:parentActivityName=".HomeActivity">
+      <meta-data
+        android:name="android.support.PARENT_ACTIVITY"
+        android:value=".HomeActivity" />
     </activity>
   </application>
 

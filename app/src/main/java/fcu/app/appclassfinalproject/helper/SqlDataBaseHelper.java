@@ -10,7 +10,7 @@ public class SqlDataBaseHelper extends SQLiteOpenHelper {
 
   private static final String TAG = "SqlDataBaseHelper";
   private static final String DataBaseName = "FCU_FinalProjectDataBase";
-  private static final int DataBaseVersion = 15;
+  private static final int DataBaseVersion = 16;
 
   public SqlDataBaseHelper(@Nullable Context context) {
     super(context, DataBaseName, null, DataBaseVersion);
@@ -88,17 +88,45 @@ public class SqlDataBaseHelper extends SQLiteOpenHelper {
     sqLiteDatabase.execSQL(createFriends);
     Log.d(TAG, "Friends table created");
 
+    // Messages 表 - 新增聊天消息表
+    String createMessagesTable = "CREATE TABLE IF NOT EXISTS Messages (" +
+        "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+        "sender_id INTEGER NOT NULL," +
+        "receiver_id INTEGER NOT NULL," +
+        "content TEXT NOT NULL," +
+        "timestamp INTEGER NOT NULL," +
+        "FOREIGN KEY(sender_id) REFERENCES Users(id) ON DELETE CASCADE," +
+        "FOREIGN KEY(receiver_id) REFERENCES Users(id) ON DELETE CASCADE" +
+        ")";
+    sqLiteDatabase.execSQL(createMessagesTable);
+    Log.d(TAG, "Messages table created");
+
     Log.d(TAG, "Database creation completed successfully");
   }
 
   @Override
   public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
     Log.d(TAG, "Upgrading database from version " + oldVersion + " to " + newVersion);
-    Log.w(TAG, "All existing data will be lost during upgrade");
 
-    // 捨棄所有舊資料，重新建立資料庫
-    dropAllTables(sqLiteDatabase);
-    onCreate(sqLiteDatabase);
+    if (oldVersion == 15 && newVersion == 16) {
+      Log.d(TAG, "Adding Messages table while preserving existing data");
+
+      String createMessagesTable = "CREATE TABLE IF NOT EXISTS Messages (" +
+          "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+          "sender_id INTEGER NOT NULL," +
+          "receiver_id INTEGER NOT NULL," +
+          "content TEXT NOT NULL," +
+          "timestamp INTEGER NOT NULL," +
+          "FOREIGN KEY(sender_id) REFERENCES Users(id) ON DELETE CASCADE," +
+          "FOREIGN KEY(receiver_id) REFERENCES Users(id) ON DELETE CASCADE" +
+          ")";
+      sqLiteDatabase.execSQL(createMessagesTable);
+      Log.d(TAG, "Messages table added successfully");
+    } else {
+      Log.w(TAG, "All existing data will be lost during upgrade");
+      dropAllTables(sqLiteDatabase);
+      onCreate(sqLiteDatabase);
+    }
 
     Log.d(TAG, "Database upgrade completed");
   }
@@ -108,7 +136,6 @@ public class SqlDataBaseHelper extends SQLiteOpenHelper {
     Log.d(TAG, "Downgrading database from version " + oldVersion + " to " + newVersion);
     Log.w(TAG, "All existing data will be lost during downgrade");
 
-    // 捨棄所有舊資料，重新建立資料庫
     dropAllTables(sqLiteDatabase);
     onCreate(sqLiteDatabase);
 
@@ -126,6 +153,7 @@ public class SqlDataBaseHelper extends SQLiteOpenHelper {
 
     try {
       // 刪除表格
+      sqLiteDatabase.execSQL("DROP TABLE IF EXISTS Messages");
       sqLiteDatabase.execSQL("DROP TABLE IF EXISTS UserIssue");
       sqLiteDatabase.execSQL("DROP TABLE IF EXISTS UserProject");
       sqLiteDatabase.execSQL("DROP TABLE IF EXISTS Friends");
@@ -141,5 +169,4 @@ public class SqlDataBaseHelper extends SQLiteOpenHelper {
       sqLiteDatabase.execSQL("PRAGMA foreign_keys=ON");
     }
   }
-
 }
